@@ -1,4 +1,6 @@
 import React from "react";
+import Comments from "@/components/Comments";
+import CommentAdder from "@/components/commentAdder";
 
 function BlogPage() {
   return (
@@ -11,6 +13,8 @@ function BlogPage() {
         neque recusandae repellendus vero deserunt facilis sint repellat culpa
         et. Quisquam, quidem. Quisquam, quidem. Quisquam, quidem. Quisquam,
       </div>
+      <CommentAdder blogid={1} />
+      <Comments />
     </div>
   );
 }
