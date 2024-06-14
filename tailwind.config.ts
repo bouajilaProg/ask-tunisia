@@ -11,10 +11,29 @@ const config: Config = {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+          "black",
       },
     },
   },
-  plugins: [],
+  plugins: [require('daisyui'),
+  function ({ addUtilities }: { addUtilities: (utilities: any) => void }) {
+    addUtilities({
+      '.hide-scrollbar': {
+        scrollbarWidth: 'none',
+        '-ms-overflow-style': 'none',
+        '&::-webkit-scrollbar': {
+          display: 'none',
+        },
+      },
+      '.bgc': {
+        backgroundImage: 'linear-gradient(to top, var(--tw-gradient-stops))',
+        '--tw-gradient-from': 'var(--tw-color-base-200)',
+        '--tw-gradient-to': 'var(--tw-color-base-300)',
+        height: '100%',
+      },
+    }
+    );
+  },
+  ],
 };
 export default config;
