@@ -1,5 +1,7 @@
 "use client";
-import  Post  from "@/types/post";
+
+import t_postFormData from "@/types/postFormData";
+import { getSession } from "next-auth/react";
 import React, { ChangeEvent, useState } from "react";
 
 function autoResize(e: any) {
@@ -13,6 +15,8 @@ function autoResize(e: any) {
 }
 
 function NewPostForm() {
+  const user = getSession();
+
   const handleChange = (
     e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -23,24 +27,18 @@ function NewPostForm() {
       [name]: value,
     });
   };
-  const [post, setpost] = useState<Post>({
-    id: 0,
+  const [post, setpost] = useState<t_postFormData>({
     title: "",
     subtitle: "",
     body: "",
-    author: "",
-    date: "",
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setpost({
-      id: post.id + 1,
       title: "",
       subtitle: "",
       body: "",
-      author: "",
-      date: "",
     });
   };
 
