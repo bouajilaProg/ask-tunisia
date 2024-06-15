@@ -6,6 +6,7 @@ function BlogPage() {
   return (
     <div className="max-w-4xl mx-auto py-8 ">
       <h1 className="text-3xl font-bold"> Post title</h1>
+      <h2 className="text-xl">subtitle</h2>
       <p>written by john doe</p>
       <p>posted on 12/12/2021</p>
       <div className="mt-4">

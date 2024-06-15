@@ -26,6 +26,7 @@ function NewPostForm() {
   const [post, setpost] = useState<Post>({
     id: 0,
     title: "",
+    subtitle: "",
     body: "",
     author: "",
     date: "",
@@ -36,6 +37,7 @@ function NewPostForm() {
     setpost({
       id: post.id + 1,
       title: "",
+      subtitle: "",
       body: "",
       author: "",
       date: "",
@@ -55,6 +57,14 @@ function NewPostForm() {
           onInput={handleChange}
           type="text"
           placeholder="title"
+          className=" m-auto input input-bordered w-full max-w-6xl mb-5"
+        />
+        <input
+          name="subtitle"
+          value={post.subtitle}
+          onInput={handleChange}
+          type="text"
+          placeholder="subtitle"
           className=" m-auto input input-bordered w-full max-w-6xl"
         />
         <textarea

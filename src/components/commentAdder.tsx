@@ -40,6 +40,7 @@ function CommentAdder(commentProp: Comment) {
     <>
     <hr className="mt-5" />
       <textarea
+        placeholder="add comment"
         name="body"
         value={comment.body}
         onInput={(e) => {

@@ -68,7 +68,7 @@ function header() {
             className="btn btn-ghost btn-circle avatar"
           >
             <div className="w-10 rounded-full">
-              <Link href="/account">
+              <Link href="/api/auth/signin">
                 <MdAccountCircle className="h-10 w-10 text-white" />
               </Link>
             </div>
