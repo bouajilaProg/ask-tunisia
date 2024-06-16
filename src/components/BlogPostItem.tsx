@@ -15,7 +15,7 @@ const handleBody = (body: string) => {
 function BlogPostItem(postItem: BlogPostItemProps) {
   return (
     
-    <article className="md:w-full w-[300px] float-start m-5 mb-8  text-left  ">
+    <article className=" w-[300px] float-start m-5 mb-8  text-left  ">
         <Link href={`/${postItem.postItem.title.replace(' ','-')}`}>
             <h3 className="w-full">{postItem.postItem.author}</h3>
             <h2 className="text-2xl text-left">{postItem.postItem.title}</h2>

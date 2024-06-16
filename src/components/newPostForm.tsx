@@ -1,8 +1,12 @@
 "use client";
 
 import t_postFormData from "@/types/postFormData";
-import { getSession } from "next-auth/react";
-import React, { ChangeEvent, useState } from "react";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
+
+import React, { ChangeEvent, use, useState } from "react";
 
 function autoResize(e: any) {
   const minHeight = 416;
@@ -14,9 +18,10 @@ function autoResize(e: any) {
   e.target.style.height = `${e.target.scrollHeight}px`;
 }
 
-function NewPostForm() {
-  const user = getSession();
 
+function NewPostForm() {
+  const {data} = useSession();
+  const router = useRouter();
   const handleChange = (
     e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -30,15 +35,28 @@ function NewPostForm() {
   const [post, setpost] = useState<t_postFormData>({
     title: "",
     subtitle: "",
-    body: "",
+    content: "",
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    try{
+      const response = await axios.post("/api/posts", post);
+      console.log(response);
+      if (response.status === 200) {
+        alert("Post created");
+        console.log(response.data);
+        router.push(`/${response.data.title}`);
+      }
+
+    }catch(error){
+      alert("something went wrong")
+      console.error(error);
+    }
     setpost({
       title: "",
       subtitle: "",
-      body: "",
+      content: "",
     });
   };
 
@@ -66,8 +84,8 @@ function NewPostForm() {
           className=" m-auto input input-bordered w-full max-w-6xl"
         />
         <textarea
-          name="body"
-          value={post.body}
+          name="content"
+          value={post.content}
           onInput={(e) => {
             handleChange(e);
             autoResize(e);

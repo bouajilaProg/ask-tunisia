@@ -4,23 +4,36 @@ import { MdSearch } from "react-icons/md";
 import { IoIosNotifications } from "react-icons/io";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import Link from "next/link";
+import { getCurrentUser } from "@/lib/session";
 
-function header() {
+async function header() {
+  const user = await getCurrentUser();
   return (
     <div className="navbar bg-red-600">
       <div className="flex-1">
-        <Link href="/" className="text-white btn btn-ghost text-xl">Ask Tunisia</Link>
+        <Link href="/" className="text-white btn btn-ghost text-xl">
+          Ask Tunisia
+        </Link>
       </div>
 
-      <div tabIndex={0} role="button" className="text-white btn btn-ghost btn-circle">
-            <div className="indicator">
-                <Link href="/new">
-                    <IoIosAddCircleOutline className="h-8 w-8" />
-                </Link>
-            </div>
-          </div>
+      <div
+        tabIndex={0}
+        role="button"
+        className="text-white btn btn-ghost btn-circle"
+      >
+        <div className="indicator">
+          <Link href="/new">
+            <IoIosAddCircleOutline className="h-8 w-8" />
+          </Link>
+        </div>
+      </div>
+
       <div className="dropdown dropdown-end">
-        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle text-white">
+        <div
+          tabIndex={0}
+          role="button"
+          className="btn btn-ghost btn-circle text-white"
+        >
           <div className="indicator">
             <MdSearch className="h-8 w-8" />
           </div>
@@ -38,6 +51,7 @@ function header() {
           </div>
         </div>
       </div>
+      {/*button*/}
       <div className="flex-none">
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
@@ -59,8 +73,9 @@ function header() {
             </div>
           </div>
         </div>
+      </div>
 
-        {/*another button*/}
+      {user?.email ? (
         <div className="dropdown dropdown-end">
           <div
             tabIndex={0}
@@ -74,7 +89,9 @@ function header() {
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <button className="btn btn-primary"></button>
+      )}
     </div>
   );
 }

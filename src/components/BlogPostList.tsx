@@ -5,7 +5,7 @@ import post from "@/data/posts";
 
 function BlogPostList() {
   return (
-    <div className="flex flex-col w-full justify-start ">
+    <div className="flex flex-col  justify-start ">
     
       {post.map((postItem: Post) => (
         <div key={postItem.id} >

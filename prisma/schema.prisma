@@ -14,20 +14,17 @@ datasource db {
 }
 
 model User {
-  id            String          @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String?
-  email         String          @unique
+  email         String    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
-  // Optional for WebAuthn support
-  Authenticator Authenticator[]
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Post      Post[]
-  comment   comment[]
+  posts         Post[]
+  comments      Comment[]
+  Authenticator Authenticator[]
 }
 
 model Account {
@@ -85,40 +82,25 @@ model Authenticator {
   @@id([userId, credentialID])
 }
 
-model user {
-  id        String    @id @default(cuid())
-  name      String?
-  email     String    @unique
-  posts     Post[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  comments  comment[]
-}
-
 model Post {
   id        String    @id @default(cuid())
   title     String
   subtitle  String
-  content   String
-  published Boolean   @default(false)
-  author    User      @relation(fields: [authorId], references: [id])
-  authorId  String
+  content    String
+  User      User?     @relation(fields: [UserId], references: [email])
+  UserId    String?
   createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  user      user?     @relation(fields: [userId], references: [id])
-  userId    String?
-  comments  comment[]
+  comments  Comment[]
 }
 
-model comment {
-  id        String   @id @default(cuid())
-  content   String
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  String
-  post      Post     @relation(fields: [postId], references: [id])
-  postId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      user?    @relation(fields: [userId], references: [id])
-  userId    String?
+model Comment {
+  id       String @id @default(cuid())
+  content  String
+
+  likes    Int    @default(0)
+  author   User   @relation(fields: [authorId], references: [email])
+  authorId String
+
+  post     Post   @relation(fields: [postId], references: [id])
+  postId   String
 }
