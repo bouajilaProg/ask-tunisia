@@ -5,7 +5,7 @@ import { useState } from "react";
 import t_comment from "@/types/comment";
 
 interface Comment {
-  blogid: number;
+  blogid: string;
 }
 
 function CommentAdder(commentProp: Comment) {
@@ -16,7 +16,7 @@ function CommentAdder(commentProp: Comment) {
     author: "John Doe",
     date: date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear(),
     likes: 0,
-    idBlog: commentProp.blogid,
+    idBlog: Number(commentProp.blogid),
   });
 
   function autoResize(e: any) {
