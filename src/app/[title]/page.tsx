@@ -25,7 +25,7 @@ const BlogPage:FC<BlogPageProps> = async ({ params }) => {
       },
     },
     where: {
-      title: params.title,
+      title: params.title.replace("-", " "),
     },
   });
   return (
