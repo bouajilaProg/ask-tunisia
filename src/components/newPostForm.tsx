@@ -45,8 +45,7 @@ function NewPostForm() {
       console.log(response);
       if (response.status === 200) {
         alert("Post created");
-        console.log(response.data);
-        router.push(`/${response.data.title}`);
+        router.push(`/${response.data.title.replaceAll(" ", "-")}`);
       }
 
     }catch(error){

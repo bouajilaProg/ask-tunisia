@@ -21,9 +21,9 @@ function BlogPostItem(postItem: BlogPostItemProps) {
   return (
     
     <article className="md:w-1/5 w-[300px] float-start m-5 mb-8  text-left  ">
-        <Link href={`/${postItem.title.replace(' ','-')}`}>
+        <Link href={`/${postItem.title.replace(" ",'-')}`}>
             <h3 className="w-full">{postItem.author}</h3>
-            <h2 className="text-2xl text-left">{postItem.title}</h2>
+            <h2 className="text-2xl text-left">{postItem.title.replaceAll("-"," ")}</h2>
             <h2 className="text-xl text-left">{postItem.subtitle}</h2>
             
         </Link>

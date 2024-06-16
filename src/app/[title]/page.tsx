@@ -12,6 +12,8 @@ interface BlogPageProps {
 
 const BlogPage:FC<BlogPageProps> = async ({ params }) => {
 
+
+  console.log(params);
   const post = await prisma.post.findFirst({
     select: {
       id: true,
@@ -25,12 +27,12 @@ const BlogPage:FC<BlogPageProps> = async ({ params }) => {
       },
     },
     where: {
-      title: params.title,
+      title: params.title
     },
   });
   return (
     <div className="max-w-4xl mx-auto py-8 ">
-      <h1 className="text-3xl font-bold"> {post?.title}</h1>
+      <h1 className="text-3xl font-bold"> {post?.title.replaceAll("-"," ")}</h1>
       <h2 className="text-xl">{post?.subtitle}</h2>
       <p>written by {post?.User?.name}</p>
       <p>posted on 12/12/2021</p>

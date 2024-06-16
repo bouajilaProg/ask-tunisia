@@ -16,7 +16,7 @@ export async function POST(req: Request) {
         const newPost = await prisma.post.create({
             data: {
                 UserId: user.email,
-                title,
+                title:title.replace(" ", "-"),
                 subtitle,
                 content,
             },
