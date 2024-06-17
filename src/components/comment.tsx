@@ -4,25 +4,27 @@ import React, { useState } from "react";
 import { BsHandThumbsUp } from "react-icons/bs";
 import { BsHandThumbsUpFill } from "react-icons/bs";
 
+interface t_commentProp {
+  likes: string;
+  author: string;
+  content: string;
+  date: string;
+}
 
-function Comment() {
-
-    const [liked, setliked] = useState(false);
+function Comment({ likes, author, content, date}: t_commentProp) {
+  const [liked, setliked] = useState(false);
   return (
     <div className="p-4 rounded-md">
       <div className="w-full inline-flex ">
-        <span className="font-bold mr-3">John Doe</span>
-        <span className="inline mr-3">12/12/2021</span>
+        <span className="font-bold mr-3">{author}</span>
+        <span className="inline mr-3">{date}</span>
         <button className="inline mb-1  " onClick={() => setliked(!liked)}>
-            {liked ?    < BsHandThumbsUpFill />: <BsHandThumbsUp  />}
-          
+          {liked ? <BsHandThumbsUpFill /> : <BsHandThumbsUp />}
         </button>
-        <span>7 </span>
+        <span>{likes} </span>
       </div>
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores soluta
-        neque recusandae repellendus vero deserunt facilis sint repellat culpa
-        et. Quisquam, quidem. Quisquam, quidem. Quisquam, quidem. Quisquam,
+        {content}
       </p>
     </div>
   );

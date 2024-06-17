@@ -101,6 +101,8 @@ model Comment {
   author   User   @relation(fields: [authorId], references: [email])
   authorId String
 
+  date     String @default("2021-6-16")
+
   post     Post   @relation(fields: [postId], references: [id])
   postId   String
 }
