@@ -38,10 +38,9 @@ const BlogPage:FC<BlogPageProps> = async ({ params }) => {
       <p>posted on 12/12/2021</p>
       <div className="mt-4">
         {post?.content}
-        
       </div>
-      <CommentAdder blogid={'1'} />
-      <Comments />
+      <CommentAdder blogid={post?.id} />
+      <Comments blogID={post?.id} />
     </div>
   );
 }

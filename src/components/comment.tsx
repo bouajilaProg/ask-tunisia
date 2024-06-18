@@ -5,10 +5,10 @@ import { BsHandThumbsUp } from "react-icons/bs";
 import { BsHandThumbsUpFill } from "react-icons/bs";
 
 interface t_commentProp {
-  likes: string;
-  author: string;
-  content: string;
-  date: string;
+  likes: string | null;
+  author: string | null;
+  content: string| null;
+  date: string| null;
 }
 
 function Comment({ likes, author, content, date}: t_commentProp) {
