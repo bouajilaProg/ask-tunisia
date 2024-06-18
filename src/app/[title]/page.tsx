@@ -30,6 +30,7 @@ const BlogPage:FC<BlogPageProps> = async ({ params }) => {
       title: params.title
     },
   });
+  
   return (
     <div className="max-w-4xl mx-auto py-8 ">
       <h1 className="text-3xl font-bold"> {post?.title.replaceAll("-"," ")}</h1>

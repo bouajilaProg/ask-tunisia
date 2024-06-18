@@ -49,9 +49,10 @@ function CommentAdder(commentProp: Comment) {
     try {
       
       const response = await axios.post("/api/commentAdd", ApiData);
-      reset();
-      router.refresh();
-      
+      if (response.status === 200) {
+        reset();
+        router.refresh();
+      }
       
     } catch (error: any) {
       console.error(error.response.data);

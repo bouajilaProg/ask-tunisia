@@ -31,7 +31,7 @@ async function header() {
         </div>
       </div>
 
-      <div className="dropdown dropdown-end">
+      {/*<div className="dropdown dropdown-end">
         <div
           tabIndex={0}
           role="button"
@@ -54,8 +54,9 @@ async function header() {
           </div>
         </div>
       </div>
-
+*/}
       {user?.email ? (
+        /*
         <div className="login-part">
           <div className="flex-none">
             <div className="dropdown dropdown-end">
@@ -84,8 +85,8 @@ async function header() {
                 </div>
               </div>
             </div>
-          </div>
-
+          </div>*/
+        <div className="flex-none">
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
