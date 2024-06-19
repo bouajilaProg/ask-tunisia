@@ -20,6 +20,7 @@ const BlogPage:FC<BlogPageProps> = async ({ params }) => {
       title: true,
       subtitle: true,
       content: true,
+      createdAt: true,
       User: {
         select: {
           name: true,
@@ -36,7 +37,7 @@ const BlogPage:FC<BlogPageProps> = async ({ params }) => {
       <h1 className="text-3xl font-bold"> {post?.title.replaceAll("-"," ")}</h1>
       <h2 className="text-xl">{post?.subtitle}</h2>
       <p>written by {post?.User?.name}</p>
-      <p>posted on 12/12/2021</p>
+      <p>{post?.createdAt.toString()}</p>
       <div className="mt-4">
         {post?.content}
       </div>

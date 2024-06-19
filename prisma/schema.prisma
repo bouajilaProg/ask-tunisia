@@ -89,7 +89,7 @@ model Post {
   content    String
   User      User?     @relation(fields: [UserId], references: [email])
   UserId    String?
-  createdAt DateTime  @default(now())
+  createdAt String  @default("16/6/2003")
   comments  Comment[]
 }
 
