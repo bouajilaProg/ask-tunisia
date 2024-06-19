@@ -2,9 +2,10 @@
 
 import t_postFormData from "@/types/postFormData";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-import React, { ChangeEvent, use, useState } from "react";
+import React, { useState } from "react";
 
 function autoResize(e: any) {
   const minHeight = 416;
@@ -18,6 +19,19 @@ function autoResize(e: any) {
 
 function NewPostForm() {
   const router = useRouter();
+  const { data } = useSession();
+  const submitBtn: HTMLButtonElement | null = document.getElementById(
+    "submitPostButton"
+  ) as HTMLButtonElement | null;
+  if (submitBtn) {
+    submitBtn.disabled = false;
+  }
+  if (!data) {
+    if (submitBtn) {
+      submitBtn.disabled = true;
+    }
+  }
+  
   const handleChange = (
     e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -36,7 +50,7 @@ function NewPostForm() {
     date: "16/6/2003",
   });
 
-  function test(post: t_postFormData): string {
+  function TestForm(post: t_postFormData): string {
     if (!post.title || !post.subtitle || !post.content) {
       return "missing fields";
     }
@@ -65,15 +79,21 @@ function NewPostForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (test(post) == "ok") {
+    const submitBtn: HTMLButtonElement | null = document.getElementById(
+      "submitPostButton"
+    ) as HTMLButtonElement | null;
+    if (submitBtn) {
+      submitBtn.disabled = true;
+    }
+
+    if (TestForm(post) == "ok") {
       try {
         const response = await axios.post("/api/posts", post);
         if (response.status === 200) {
-          alert("Post created");
           router.push(`/${response.data.title.replaceAll(" ", "-")}`);
         }
-      } catch (error) {
-        alert("something went wrong");
+      } catch (error: any) {
+        console.warn(error);
       }
       setpost({
         title: "",
@@ -82,7 +102,7 @@ function NewPostForm() {
         date: "16/6/2003",
       });
     } else {
-      alert(test(post));
+      alert(TestForm(post));
     }
   };
 
@@ -118,7 +138,12 @@ function NewPostForm() {
           }}
           className=" my-5 textarea textarea-bordered  textarea-lg w-full max-w-6xl resize-none h-[416px] hide-scrollbar"
         ></textarea>
-        <button className="btn btn-outline w-full max-w-6xl ">Send</button>
+        <button
+          id="submitPostButton"
+          className="btn btn-outline w-full max-w-6xl "
+        >
+          Send
+        </button>
       </div>
     </form>
   );

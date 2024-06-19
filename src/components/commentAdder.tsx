@@ -4,7 +4,8 @@ import React, { ReactEventHandler } from "react";
 import { useState } from "react";
 import t_comment from "@/types/comment";
 import axios from "axios";
-import {useRouter} from "next/navigation"
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 interface Comment {
   blogid: string | undefined;
@@ -23,7 +24,7 @@ function CommentAdder(commentProp: Comment) {
     id: 0,
     body: "",
     author: "John Doe",
-    date: date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear(),
+    date: date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear(),
     likes: 0,
     idBlog: Number(commentProp.blogid),
   });
@@ -33,7 +34,8 @@ function CommentAdder(commentProp: Comment) {
       id: 0,
       body: "",
       author: "weld mohsen",
-      date: date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear(),
+      date:
+        date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear(),
       likes: 0,
       idBlog: Number(commentProp.blogid),
     });
@@ -47,36 +49,35 @@ function CommentAdder(commentProp: Comment) {
       blogId: commentProp.blogid,
     };
 
-
-    function testComment(ApiData:t_CommentSendedData):string{
-      if (ApiData == undefined) return "error";
+    function TestComment(ApiData: t_CommentSendedData): string {
       
-      if ((!ApiData.content) || (ApiData.content.length < 5)) {
+      if (ApiData == undefined) return "error";
+
+      if (!ApiData.content || ApiData.content.length < 5) {
         return "comment too short";
       }
-      
+
       if (ApiData.content.length > 200) return "comment too long";
-      
+
       if (!/^[a-zA-Z0-9- ]*$/.test(ApiData.content)) {
         return "comment must be alphanumeric";
       }
       return "ok";
     }
 
-    if (testComment(ApiData) == "ok") {
-    try {
-      
-      const response = await axios.post("/api/commentAdd", ApiData);
-      if (response.status === 200) {
-        reset();
-        router.refresh();
+    if (TestComment(ApiData) == "ok") {
+      try {
+        const response = await axios.post("/api/commentAdd", ApiData);
+        if (response.status === 200) {
+          reset();
+          router.refresh();
+        }
+      } catch (error: any) {
+        console.error(error.response.data);
+        console.warn(error);
       }
-      
-    } catch (error: any) {
-      console.error(error.response.data);
-      console.warn(error);
-    }}else{
-      alert(testComment(ApiData));
+    } else {
+      console.error(TestComment(ApiData));
     }
   }
 
@@ -100,9 +101,8 @@ function CommentAdder(commentProp: Comment) {
     }));
   };
 
-
   return (
-    <form onSubmit={handleSubmit} >
+    <form onSubmit={handleSubmit}>
       <hr className="mt-5" />
       <textarea
         placeholder="add comment"
