@@ -4,6 +4,7 @@ import BlogPostItemProps from "@/types/BlogPostItemProps";
 import prisma from "@/lib/db";
 
 
+
 async function BlogPostList() {
   const blogs = await prisma.post.findMany({
     select: {

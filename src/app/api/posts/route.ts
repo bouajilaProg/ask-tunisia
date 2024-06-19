@@ -9,16 +9,17 @@ export async function POST(req: Request) {
         if (!user?.email) {
             return NextResponse.json({ error: "You are not logged in" }, { status: 401 });
         }
-        const { title, subtitle, content } = await req.json();
+        const { title, subtitle, content,date } = await req.json();
         if (!title || !subtitle || !content) {
             console.log("missing fields");
         }
         const newPost = await prisma.post.create({
             data: {
                 UserId: user.email,
-                title:title.replace(" ", "-"),
+                title:title.trim.replaceAll(" ", "-"),
                 subtitle,
                 content,
+                createdAt:date
             },
         });
 

@@ -23,7 +23,7 @@ function CommentAdder(commentProp: Comment) {
     id: 0,
     body: "",
     author: "John Doe",
-    date: date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear(),
+    date: date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear(),
     likes: 0,
     idBlog: Number(commentProp.blogid),
   });
@@ -33,7 +33,7 @@ function CommentAdder(commentProp: Comment) {
       id: 0,
       body: "",
       author: "weld mohsen",
-      date: date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear(),
+      date: date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear(),
       likes: 0,
       idBlog: Number(commentProp.blogid),
     });
@@ -46,6 +46,24 @@ function CommentAdder(commentProp: Comment) {
       date: comment.date,
       blogId: commentProp.blogid,
     };
+
+
+    function testComment(ApiData:t_CommentSendedData):string{
+      if (ApiData == undefined) return "error";
+      
+      if ((!ApiData.content) || (ApiData.content.length < 5)) {
+        return "comment too short";
+      }
+      
+      if (ApiData.content.length > 200) return "comment too long";
+      
+      if (!/^[a-zA-Z0-9- ]*$/.test(ApiData.content)) {
+        return "comment must be alphanumeric";
+      }
+      return "ok";
+    }
+
+    if (testComment(ApiData) == "ok") {
     try {
       
       const response = await axios.post("/api/commentAdd", ApiData);
@@ -56,6 +74,8 @@ function CommentAdder(commentProp: Comment) {
     } catch (error: any) {
       console.error(error.response.data);
       console.warn(error);
+    }}else{
+      alert(testComment(ApiData));
     }
   }
 

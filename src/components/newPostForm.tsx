@@ -1,10 +1,8 @@
-  "use client";
+"use client";
 
 import t_postFormData from "@/types/postFormData";
 import axios from "axios";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-
 
 import React, { ChangeEvent, use, useState } from "react";
 
@@ -18,9 +16,7 @@ function autoResize(e: any) {
   e.target.style.height = `${e.target.scrollHeight}px`;
 }
 
-
 function NewPostForm() {
-  const {data} = useSession();
   const router = useRouter();
   const handleChange = (
     e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -32,31 +28,62 @@ function NewPostForm() {
       [name]: value,
     });
   };
+
   const [post, setpost] = useState<t_postFormData>({
     title: "",
     subtitle: "",
     content: "",
+    date: "16/6/2003",
   });
+
+  function test(post: t_postFormData): string {
+    if (!post.title || !post.subtitle || !post.content) {
+      return "missing fields";
+    }
+
+    if (post.title.length > 40) return "title too long";
+    if (post.subtitle.length > 80) return "subtitle too long";
+
+    if (!/^[a-zA-Z0-9- ]*$/.test(post.title)) {
+      return "title must be alphanumeric";
+    }
+
+    if (!/^[a-zA-Z0-9- ]*$/.test(post.subtitle)) {
+      return "subtitle must be alphanumeric";
+    }
+
+    if (!/^[a-zA-Z0-9- ]*$/.test(post.content)) {
+      return "the article must be alphanumeric";
+    }
+
+    if (post.title.trim().length < 5) return "title too short";
+    if (post.subtitle.trim().length < 5) return "subtitle too short";
+    if (post.content.trim().length < 40) return "content too short";
+
+    return "ok";
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try{
-      const response = await axios.post("/api/posts", post);
-      console.log(response);
-      if (response.status === 200) {
-        alert("Post created");
-        router.push(`/${response.data.title.replaceAll(" ", "-")}`);
+    if (test(post) == "ok") {
+      try {
+        const response = await axios.post("/api/posts", post);
+        if (response.status === 200) {
+          alert("Post created");
+          router.push(`/${response.data.title.replaceAll(" ", "-")}`);
+        }
+      } catch (error) {
+        alert("something went wrong");
       }
-
-    }catch(error){
-      alert("something went wrong")
-      console.error(error);
+      setpost({
+        title: "",
+        subtitle: "",
+        content: "",
+        date: "16/6/2003",
+      });
+    } else {
+      alert(test(post));
     }
-    setpost({
-      title: "",
-      subtitle: "",
-      content: "",
-    });
   };
 
   return (

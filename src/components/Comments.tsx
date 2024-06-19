@@ -50,7 +50,7 @@ async function Comments({ blogID} : t_commentsProp) {
   return (
     <div>
       <br />
-      <h1 className="text-3xl font-bold">1 Comments</h1>
+      <h1 className="text-3xl font-bold">{comments.length} Comments</h1>
       {comments.map((commentData) => (
         <Comment key={commentData.id} author={commentData?.author} content={commentData.content} date={commentData.date} likes={commentData.likes.toString()} />
       ))}
