@@ -24,7 +24,8 @@ function CommentAdder(commentProp: Comment) {
     id: 0,
     body: "",
     author: "John Doe",
-    date: date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear(),
+    date:
+      date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear(),
     likes: 0,
     idBlog: Number(commentProp.blogid),
   });
@@ -35,7 +36,7 @@ function CommentAdder(commentProp: Comment) {
       body: "",
       author: "weld mohsen",
       date:
-        date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear(),
+        date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear(),
       likes: 0,
       idBlog: Number(commentProp.blogid),
     });
@@ -50,7 +51,6 @@ function CommentAdder(commentProp: Comment) {
     };
 
     function TestComment(ApiData: t_CommentSendedData): string {
-      
       if (ApiData == undefined) return "error";
 
       if (!ApiData.content || ApiData.content.length < 5) {
@@ -77,7 +77,7 @@ function CommentAdder(commentProp: Comment) {
         console.warn(error);
       }
     } else {
-      console.error(TestComment(ApiData));
+      alert(TestComment(ApiData));
     }
   }
 

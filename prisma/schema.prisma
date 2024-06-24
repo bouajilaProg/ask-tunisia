@@ -18,6 +18,7 @@ model User {
   comments      Comment[]
   posts         Post[]
   sessions      Session[]
+  liked         Commentlikes[]
 }
 
 model Account {
@@ -82,12 +83,23 @@ model Post {
 }
 
 model Comment {
-  id       String @id @default(cuid())
+  id       String         @id @default(cuid())
   content  String
-  likes    Int    @default(0)
+  likes    Int            @default(0)
   authorId String
   postId   String
-  date     String @default("16/6/2003")
-  author   User   @relation(fields: [authorId], references: [email])
-  post     Post   @relation(fields: [postId], references: [id])
+  date     String         @default("16/6/2003")
+  author   User           @relation(fields: [authorId], references: [email])
+  post     Post           @relation(fields: [postId], references: [id])
+  likedBy  Commentlikes[]
+}
+
+model Commentlikes {
+  id String @id @default(cuid())
+  User      User?    @relation(fields: [userId], references: [email])
+  userId    String?
+  Comment   Comment? @relation(fields: [commentId], references: [id])
+  commentId String?
+
+  @@unique([userId,commentId])
 }

@@ -20,17 +20,7 @@ function autoResize(e: any) {
 function NewPostForm() {
   const router = useRouter();
   const { data } = useSession();
-  const submitBtn: HTMLButtonElement | null = document.getElementById(
-    "submitPostButton"
-  ) as HTMLButtonElement | null;
-  if (submitBtn) {
-    submitBtn.disabled = false;
-  }
-  if (!data) {
-    if (submitBtn) {
-      submitBtn.disabled = true;
-    }
-  }
+  const date = new Date();
   
   const handleChange = (
     e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -47,7 +37,7 @@ function NewPostForm() {
     title: "",
     subtitle: "",
     content: "",
-    date: "16/6/2003",
+    date:  date.getDate()+"/"+ (date.getMonth() + 1) + "/" + date.getFullYear()
   });
 
   function TestForm(post: t_postFormData): string {
@@ -79,13 +69,8 @@ function NewPostForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const submitBtn: HTMLButtonElement | null = document.getElementById(
-      "submitPostButton"
-    ) as HTMLButtonElement | null;
-    if (submitBtn) {
-      submitBtn.disabled = true;
-    }
-
+    
+    
     if (TestForm(post) == "ok") {
       try {
         const response = await axios.post("/api/posts", post);
@@ -95,17 +80,21 @@ function NewPostForm() {
       } catch (error: any) {
         console.warn(error);
       }
+      
       setpost({
         title: "",
         subtitle: "",
         content: "",
-        date: "16/6/2003",
+        date:  date.getDate()+"/"+ (date.getMonth() + 1) + "/" + date.getFullYear(),
       });
     } else {
       alert(TestForm(post));
     }
   };
 
+
+  const buttonState = data ? false : true;
+  
   return (
     <form
       className="flex justify-center items-center flex-col bg-gradient-to-t from-base-200 to-base-300"
@@ -141,6 +130,7 @@ function NewPostForm() {
         <button
           id="submitPostButton"
           className="btn btn-outline w-full max-w-6xl "
+          disabled={buttonState}
         >
           Send
         </button>

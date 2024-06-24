@@ -1,6 +1,6 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 
@@ -14,9 +14,9 @@ function SignButton() {
     );
   } else {
     return (
-        <div className="text-white text-semibold text-xl">
-            <Link href="/api/auth/signin">Sign in</Link>
-        </div>
+      <div className="text-white text-semibold text-xl">
+      <button onClick={() => signIn('google')}>Sign In</button>
+    </div>
     );
   }
 }

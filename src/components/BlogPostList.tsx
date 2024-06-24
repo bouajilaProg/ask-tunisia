@@ -30,9 +30,6 @@ async function BlogPostList() {
     subtitle: blog.subtitle,
   }));
 
-  
-
-
   console.log(blogs);
   return (
     <div className="flex flex-col  justify-start ">
