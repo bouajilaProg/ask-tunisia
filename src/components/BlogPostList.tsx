@@ -19,7 +19,7 @@ async function BlogPostList() {
       },
     },
     orderBy: {
-      title: "desc",
+      likes: "desc",
     },    
   });
 

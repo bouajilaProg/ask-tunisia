@@ -16,6 +16,9 @@ export async function POST(req: Request) {
             console.log("missing fields");
         }
         
+
+        
+        
         const newPost = await prisma.post.create({
             data: {
                 UserId: user.email,

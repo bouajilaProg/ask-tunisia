@@ -4,7 +4,6 @@ import axios from "axios";
 import React, { useState } from "react";
 import { BsHandThumbsUp } from "react-icons/bs";
 import { BsHandThumbsUpFill } from "react-icons/bs";
-import { start } from "repl";
 
 interface t_commentProp {
   likesProp: string | null;
@@ -23,10 +22,9 @@ async function updateLikes(
 ) {
   const apiBody = { liked: liked, userID: userID, commentID: commentID };
   try {
-    const responce = await axios.post("/api/Likes", apiBody);
+    const responce = await axios.post("/api/commentsLikes/Likes", apiBody);
     if (responce.status == 200) {
-      console.log(liked);
-      const responce = await axios.post("/api/likesCount", { commentID });
+      const responce = await axios.post("/api/commentsLikes/likesCount", { commentID });
       setlikes(responce.data.count);
     }
   } catch (error) {
@@ -34,13 +32,13 @@ async function updateLikes(
   }
 }
 
-async function LowStartUpdateLikes(
+async function SlowStartUpdateLikes(
   userId: String,
   commentID: string,
   setlikes: any,
   setLiked:any
 ) {
-  const responce = await axios.post("/api/likesCount", { commentID, userId });
+  const responce = await axios.post("/api/commentsLikes/likesCount", { commentID, userId });
   if (responce.status == 200) {
     setlikes(responce.data.count);
     setLiked(responce.data.isLiked);
@@ -63,7 +61,7 @@ function Comment({
   if (userId) {
     if (Start == 0) {
       setStart(1);
-      LowStartUpdateLikes(userId, commentID, setLikes,setliked);
+      SlowStartUpdateLikes(userId, commentID, setLikes,setliked);
     }
   }
 
