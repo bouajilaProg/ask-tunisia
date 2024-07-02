@@ -96,7 +96,7 @@ async function Comments({ blogID }: t_commentsProp) {
       }
     });
   }
-  console.log(comments,likedCommentsIDS)
+  
   
 
   return (

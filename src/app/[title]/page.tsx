@@ -26,7 +26,6 @@ async function getLiked(title: string,userid : string|undefined|null) {
 const BlogPage:FC<BlogPageProps> = async ({ params }) => {
 
 
-  console.log(params);
   const post = await prisma.post.findFirst({
     select: {
       id: true,

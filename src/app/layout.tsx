@@ -1,21 +1,22 @@
-
-
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/header";
-import Footer from "@/components/Footer";
 import Provider from "@/components/provider";
+import React, { useState } from "react";
+import MainApp from "@/components/MainApp";
 
 export const metadata: Metadata = {
   title: "Ask Tunisia",
   description: "where tunisian talk about everything",
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html
       lang="en"
@@ -25,10 +26,11 @@ export default function RootLayout({
         name="viewport"
         content="width=device-width, initial-scale=1.0"
       ></meta>
-      <body >
-        <Provider >
-          <Header />
-          {children}
+      <body>
+        <Provider>
+          <MainApp >
+            {children}
+          </MainApp>
         </Provider>
       </body>
     </html>

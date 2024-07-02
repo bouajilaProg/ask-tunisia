@@ -83,7 +83,7 @@ function CommentAdder(commentProp: Comment) {
 
   function autoResize(e: any) {
     const minHeight = 46;
-    console.log(e.target.scrollHeight);
+    
     if (e.target.scrollHeight <= minHeight) {
       e.target.style.height = `${minHeight}px`;
       return;
