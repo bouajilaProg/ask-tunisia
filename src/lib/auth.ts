@@ -2,7 +2,6 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import GoogleProvider from "next-auth/providers/google"
 import prisma from "./db"
 import { Adapter } from "next-auth/adapters"
-import { signIn } from "next-auth/react"
 
 
 

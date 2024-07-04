@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/header";
+
 import Provider from "@/components/provider";
-import React, { useState } from "react";
+import React from "react";
 import MainApp from "@/components/MainApp";
 
 export const metadata: Metadata = {

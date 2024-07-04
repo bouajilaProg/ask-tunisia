@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useState, createContext } from "react";
-import Provider from "./provider";
 import Header from "./header";
-import BlogPostList from "./BlogPostList";
 
 export const toSearchContext = createContext({
   toSearch: "",
