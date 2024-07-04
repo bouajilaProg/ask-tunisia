@@ -2,7 +2,7 @@ import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-    
+  // Get all blogs
   const blogs = await prisma.post.findMany({
     select: {
       id: true,

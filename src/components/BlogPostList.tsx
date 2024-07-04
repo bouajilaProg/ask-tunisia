@@ -31,7 +31,24 @@ interface BlogPostListProps {
 async function BlogPostList(tosearchProp: BlogPostListProps) {
   
   
-  const blogs:t_blogs[] = (await axios.get("/api/GetBlogs")).data.blogs;
+  const blogs:t_blogs[] =  await prisma.post.findMany({
+    select: {
+      id: true,
+      title: true,
+      subtitle: true,
+      content: true,
+      User: {
+        select: {
+          name: true,
+        },
+      },
+    },
+    orderBy: {
+      likes: "desc",
+    },
+  });
+  
+  //const blogs:t_blogs[] = [];
   
   const toSearch  = tosearchProp.search;
   console.log(toSearch)

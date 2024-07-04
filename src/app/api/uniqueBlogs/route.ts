@@ -3,10 +3,7 @@ import { NextResponse } from "next/server"
 
 export async function POST(req: Request) {
     try {
-
         const { PostTitle } = await req.json();
-
-
         const unique = await prisma.post.findFirst({
             where: {
                 title: PostTitle.replaceAll(" ", "-"),
