@@ -1,5 +1,6 @@
 "use client";
 
+import prisma from "@/lib/db";
 import t_postFormData from "@/types/postFormData";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -21,7 +22,7 @@ function NewPostForm() {
   const router = useRouter();
   const { data } = useSession();
   const date = new Date();
-  
+
   const handleChange = (
     e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -37,7 +38,8 @@ function NewPostForm() {
     title: "",
     subtitle: "",
     content: "",
-    date:  date.getDate()+"/"+ (date.getMonth() + 1) + "/" + date.getFullYear()
+    date:
+      date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear(),
   });
 
   function TestForm(post: t_postFormData): string {
@@ -47,18 +49,7 @@ function NewPostForm() {
 
     if (post.title.length > 40) return "title too long";
     if (post.subtitle.length > 80) return "subtitle too long";
-
-    if (!/^[a-zA-Z0-9- ]*$/.test(post.title)) {
-      return "title must be alphanumeric";
-    }
-
-    if (!/^[a-zA-Z0-9- ]*$/.test(post.subtitle)) {
-      return "subtitle must be alphanumeric";
-    }
-
-    if (!/^[a-zA-Z0-9- ]*$/.test(post.content)) {
-      return "the article must be alphanumeric";
-    }
+    if (post.content.length > 2000) return "content too long";
 
     if (post.title.trim().length < 5) return "title too short";
     if (post.subtitle.trim().length < 5) return "subtitle too short";
@@ -69,8 +60,17 @@ function NewPostForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    
+    const apiBody = {
+      PostTitle: post.title,
+    }
+    const uniqueCheck = await axios.post("/api/uniqueBlogs",apiBody);
+    if (uniqueCheck.status === 200) {
+      if (uniqueCheck.data.unique === false) {
+        alert("title already exists");
+        return;
+      }
+    }
+
     if (TestForm(post) == "ok") {
       try {
         const response = await axios.post("/api/posts", post);
@@ -80,21 +80,25 @@ function NewPostForm() {
       } catch (error: any) {
         console.warn(error);
       }
-      
+
       setpost({
         title: "",
         subtitle: "",
         content: "",
-        date:  date.getDate()+"/"+ (date.getMonth() + 1) + "/" + date.getFullYear(),
+        date:
+          date.getDate() +
+          "/" +
+          (date.getMonth() + 1) +
+          "/" +
+          date.getFullYear(),
       });
     } else {
       alert(TestForm(post));
     }
   };
 
-
   const buttonState = data ? false : true;
-  
+
   return (
     <form
       className="flex justify-center items-center flex-col bg-gradient-to-t from-base-200 to-base-300"

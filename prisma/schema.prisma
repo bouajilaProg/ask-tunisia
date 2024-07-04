@@ -4,7 +4,8 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 model User {
@@ -74,7 +75,7 @@ model Authenticator {
 
 model Post {
   id        String      @id @default(cuid())
-  title     String
+  title     String      @unique
   subtitle  String
   content   String
   createdAt String      @default("16/6/2003")

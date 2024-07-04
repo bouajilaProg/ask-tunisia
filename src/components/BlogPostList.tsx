@@ -57,11 +57,5 @@ async function BlogPostList(tosearchProp: BlogPostListProps) {
   );
 }
 
-export const getServerSideProps:GetServerSideProps = async (context:GetServerSidePropsContext) => {
-  const  search  = context.query;
-  console.log('context.query:', context.query);
-  return {props: { search }};
-}; 
-
 export default BlogPostList;
 
