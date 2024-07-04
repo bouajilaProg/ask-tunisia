@@ -31,7 +31,7 @@ interface BlogPostListProps {
 async function BlogPostList(tosearchProp: BlogPostListProps) {
   
   
-  const blogs:t_blogs[] = (await axios.get("http://localhost:3000/api/GetBlogs")).data.blogs;
+  const blogs:t_blogs[] = (await axios.get("/api/GetBlogs")).data.blogs;
   
   const toSearch  = tosearchProp.search;
   console.log(toSearch)
