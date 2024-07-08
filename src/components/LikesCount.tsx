@@ -64,13 +64,13 @@ function LikesCount({ blogID, userId, likedProp }: LikesCountProp) {
     <div className="inline-flex w-full mt-3 ">
       {" "}
       <button
-        className="inline mb-1"
+        className="inline mb-2"
         onClick={() => {
           if (blogID != null && userId != null) {
             updateLikes(liked, blogID, userId, setLikes, setliked);
           }
         }}
-      >
+      > 
         {liked ? <BsHandThumbsUpFill /> : <BsHandThumbsUp />}
       </button>
       <span className="mb-1">{likes} likes</span>
